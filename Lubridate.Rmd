@@ -33,5 +33,21 @@ opts_knit$set(width=75)
   + overrides base R functions for working with dates and times  
   + focuses on working with dates and datetimes, not times in particular (for that see hms package)  
   + refers to a specific moment in time as an **instant**  
-- A [Cheat Sheet](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf) with the most important formulas and explanations is available
+- A [Cheat Sheet](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf) with the most important formulas and explanations is available  
 
+# Prerequisites  
+
+- Lubridate is not part of the core tidyverse and thus needs an extra installation:  
+```{r}
+install.packages("lubridate")
+```
+- When working with lubridate installing and using the tidyverse is recommended:  
+```{r}
+library(lubridate)
+library(tidyverse)
+```
+- The Development version of the package is available on GitHub (other packages needed to install)  
+
+## Preparing the Data
+
+- 
