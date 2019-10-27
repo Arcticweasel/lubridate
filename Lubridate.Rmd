@@ -285,7 +285,7 @@ df %>% select(stop_date_time, interval_days)
 
 - Time Zone is an attribute of the datetime object  
 
-- R uses international standardt time zones displayed in `<continent>/<city>`  
+- R uses international standard time zones displayed in `<continent>/<city>`  
 
 - If no time zone is specified R assumes UTC, which doesn't use DST  
 
