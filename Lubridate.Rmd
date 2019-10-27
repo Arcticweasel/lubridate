@@ -13,7 +13,7 @@ library(knitr)
 library(rmdformats)
 
 ## Global options
-options(max.print="75")
+options(max.print="1000")
 opts_chunk$set(echo=T,
 	             cache=TRUE,
                prompt=FALSE,
@@ -21,33 +21,41 @@ opts_chunk$set(echo=T,
                comment=NA,
                message=FALSE,
                warning=FALSE)
-opts_knit$set(width=75)
+opts_knit$set(width=1000)
 ```
 
 # Overview  
 
 - Lubridate is a R package that belongs to the tidyverse and makes working with dates and times easier and more intuitive  
+
 - Base R functions for dates and times are unintuitive and limited such as `as.POSIXct()`, `ISOdate()` or `as.POSIXct.Date()`  
+
 - Lubridate  
-  + offers consistent and easy to handle functions, that take special features as leap years, leap seconds, daylight savings time (DST) or time zones into account  
-  + overrides base R functions for working with dates and times  
-  + focuses on working with dates and datetimes, not times in particular (for that see hms package)  
-  + refers to a specific moment in time as an **instant**  
+  + Offers consistent and easy to handle functions, that take special features as leap years, leap seconds, daylight savings time (DST) or time zones into account  
+  + Overrides base R functions for working with dates and times  
+  + Focuses on working with dates and datetimes, not times in particular (for that see hms package)  
+  + Refers to a specific moment in time as an **instant**      
+
+
 - A [Cheat Sheet](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf) with the most important formulas and explanations is available  
 
 # Prerequisites  
 
 - Lubridate is not part of the core tidyverse and thus needs an extra installation via `install.packages("lubridate")`  
+
 - When working with lubridate installing and using the tidyverse is recommended:  
+
 ```{r}
 library(lubridate)
 library(tidyverse)
-```
+```  
+
 - The Development version of the package is available on GitHub (other packages needed to install)  
 
-## Preparing the Data
+## Preparing the Data  
 
 - Load and inspect the data, check for NAs and remove empty columns  
+
 ```{r}
 df <- read_csv("police_project.csv")
 View(df)
@@ -59,27 +67,32 @@ df %>%
 
 df <- df %>%
   within(rm(county_name))
-```
+```  
+
 - Set theme for visualizations to classic  
+
 ```{r}
 theme_set(theme_classic())
 ```
 
-# Creating Dates and Datetimes
+# Creating Dates and Datetimes  
 
 - Three types refer to an instant  
-  + Date  
+  + Date `<date>`   
     - If displayed in numeric context (e.g. histogram) 1 means one day  
-  + Time  
-  + Datetime  
+  + Time `<time>`   
+  + Datetime `<dttm>`  
     - If displayed in numeric context (e.g. histogram) 1 means one second  
-- Always use simplest possible type (no unnecessary datetime)  
+
+- Always use *simplest* possible type (no unnecessary datetime)    
+
 - Get current date or datetime via `today()` and `now()` functions  
 
 ## Create Dates and Datetimes from String  
 
-- functions automatically work out format if order of **y**ear, **m**onth, **d**ay, **h**our, **m**inute and **s**econd 
-  + automatically recognize common separators **-**, **/**, **.** and **" "**
+- Functions automatically work out format if order of **y**ear, **m**onth, **d**ay, **h**our, **m**inute and **s**econd 
+  + Automatically recognize common separators **"-"**, **"/"**, **"."** and **" "**  
+  
 ```{r}
 mdy_hm("January, 31st, 2019 10:45")
 ```  
@@ -87,13 +100,18 @@ mdy_hm("January, 31st, 2019 10:45")
 ## Create Dates and Datetimes from Individual Components/Columns  
 
 - For making dates use `make_date()`  
+
 - For making datetimes use `make_datetime()`  
+
 ```{r}
+# New column with format datetime
 df <- df %>%
   mutate(stop_date_time=make_datetime(year=year(stop_date), month = month(stop_date), day = 
          day(stop_date), hour = hour(stop_time), min = minute(stop_time), sec = second(stop_time)))
 ```
+
 - In this case very long, instead the functions from the chapter before can be used  
+
 ```{r}
 df <- df %>%
   mutate(stop_date_time=ymd_hms(paste(stop_date,stop_time)))
@@ -108,7 +126,8 @@ df <- df %>%
 ## Getting Components  
 
 - Use accessor functions to get specific components of dates or datetimes, similar to functions creating dates and datetimes, such as `year()`, `month()`, `yday()`, `mday()`, `wday()`, `hour()`, `minute()`, `second()`  
-  + for `month()` and `wday()` set **label = T** to display the name and set **abbr = F** to display the full name, otherwise the abbrevation will be shown  
+  + For `month()` and `wday()` set **label = T** to display the name and set **abbr = F** to display the full name, otherwise the abbrevation will be shown  
+  
 ```{r}
 # Show all speeding drivers under 25 while grouping by year component of stop_date_time
 df %>% 
@@ -130,16 +149,20 @@ df %>%
 ## Setting Components  
 
 - To set a component of a single date or datetime to a specific value use the same functions as for getting components, e.g. `year()`, `month()`, `hour()` etc.  
+
 - To set multiple values at once use `update()`, where all date components for a certain variable or column can be specified at once  
+
 - If a set value is too big, it will automatically roll over to the next bigger unit, e.g. adding 30 days to Feb. 1st will result in a date or datetime with month march  
 
 ## Rounding Components  
 
 - Rounding dates is useful when dealing with units that are not a direct component of a date or datetime, such as quarters or weeks  
+
 - Three functions to round  
   + `floor_date()` rounds to the next smaller unit  
   + `round_date()` rounds to mathematically nearest unit  
   + `ceiling_date()` rounds to next bigger unit  
+  
 ```{r}
 # New columns for rounded quarters
 df <- df %>% 
@@ -164,7 +187,9 @@ df %>%
 ## Duration  
 
 - Durations represent the exact **number of seconds** between two instants (fixed length)  
+
 - All difftime objects can be formatted into a duration to get a fixed result unit (seconds) with `as.duration()`  
+
 ```{r}
 # Calculating the time difference between two stops
 df <- df %>% 
@@ -172,37 +197,48 @@ df <- df %>%
          duration = as.duration(time_diff))
 df %>% select(stop_date_time, duration)
 ```  
+
 - Calculating with durations works with similar functions as before, e.g. `dyears()` or `dhours()`  
+
 ```{r}
 # Calculate limitation date
 df <- df %>% 
   mutate(limitation = as_date(stop_date_time + dyears(3)))
 df %>% select(stop_date_time, limitation)
 ```  
+
 **ATTENTION**  
 
 - No `dmonth()` function as months don't have the same length  
+
 - When confronted with higher units than seconds the conversion rate is 60 seconds a minute, 60 minutes an hour etc. and thus specalities such as DST aren't considered  
 
 ## Period  
 
 - Periods don't have the same length, but work in human units such as days, months etc.  
+
 - They are more intuitive to work with than durations  
+
 - Takes specialities such as DST or leap years into account  
+
 - All difftime objects can be formatted into a period with `as.period()`  
+
 ```{r}
 # Calculating the time difference between two stops as a period
 df <- df %>% 
   mutate(period = as.period(time_diff))
 df %>% select(stop_date_time, duration, period)
 ```  
+
 - Creating and calculating with periods works with similar functions as before, e.g. `years()`, `months()`, `hours()` etc.  
+
 ```{r}
 # Calculate limitation date with period
 df <- df %>% 
   mutate(limitation_period = as_date(stop_date_time + years(3)))
 df %>% select(stop_date_time, limitation, limitation_period)
 ```  
+
 **ATTENTION**  
 
 - `hour()` != `hours()`, `month()` != `months()` etc.  
@@ -210,10 +246,14 @@ df %>% select(stop_date_time, limitation, limitation_period)
 ## Interval  
 
 - Intervals represent a duration with a specific starting point (and ending point)  
+
 - Accurate measurement of time spans (periods and durations lack context often)  
+
 - Not useful for datetime calculations as intervals are bound to a start and an end  
   + If intervals are added to datetime objects R coerces it into a duration  
+
 - When building an interval the date that occurs earlier in time must be called first, so that the length is always positive  
+
 ```{r}
 df <- df %>% mutate(interval = lag(stop_date_time) %--% stop_date_time)
 df %>% select(stop_date_time, interval)
@@ -223,7 +263,9 @@ df %>% select(stop_date_time, interval)
 df <- df %>% 
   mutate(interval = interval(start = lag(stop_date_time), end = stop_date_time))
 ```  
+
 - Calculate the periods in an interval with integer division `%/%` (division without remainers)  
+
 ```{r}
 df <- df %>% 
   mutate(interval_days = interval %/% days(1))
@@ -240,17 +282,23 @@ df %>% select(stop_date_time, interval_days)
 # Time Zones  
 
 - Time zones are complicated to work with, because of geopolitical entities or ambiguous everyday names, such as Eastern Standard Time, which is different in the USA, Canada or Australia  
-- Time Zone is an attribute of the datetime object  
-- R uses international standardt time zones displayed in `<continent>/<city>`  
-- If no time zone is specified R assumes UTC, which doesn't use DST  
-- Operations that combine dates or datetimes (e.g. `c()`) often drop assigned time zone and use the local time zone  
-- Local time zone can be displayed via `Sys.timezone()`  
-- Complete list of time zones can be displayed via `OlsonNames()`  
-- Change time zone on two levels  
 
+- Time Zone is an attribute of the datetime object  
+
+- R uses international standardt time zones displayed in `<continent>/<city>`  
+
+- If no time zone is specified R assumes UTC, which doesn't use DST  
+
+- Operations that combine dates or datetimes (e.g. `c()`) often drop assigned time zone and use the local time zone  
+
+- Local time zone can be displayed via `Sys.timezone()`  
+
+- Complete list of time zones can be displayed via `OlsonNames()`  
+
+- Change time zone on two levels  
   + Keep the instant and only change how it's displayed `with_tz()` 
-  + Change the underlying instant, e.g. when wrong time zone is assigned `force_tz()`
-  
+  + Change the underlying instant, e.g. when wrong time zone is assigned `force_tz()`  
+
 ```{r}
 # Keep instant
 df <- df %>% 

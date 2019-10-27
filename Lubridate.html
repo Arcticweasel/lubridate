@@ -1549,30 +1549,26 @@ $(document).ready(function () {
 <div id="overview" class="section level1">
 <h1>Overview</h1>
 <ul>
-<li>Lubridate is a R package that belongs to the tidyverse and makes working with dates and times easier and more intuitive<br />
-</li>
-<li>Base R functions for dates and times are unintuitive and limited such as <code>as.POSIXct()</code>, <code>ISOdate()</code> or <code>as.POSIXct.Date()</code><br />
-</li>
-<li>Lubridate
+<li><p>Lubridate is a R package that belongs to the tidyverse and makes working with dates and times easier and more intuitive</p></li>
+<li><p>Base R functions for dates and times are unintuitive and limited such as <code>as.POSIXct()</code>, <code>ISOdate()</code> or <code>as.POSIXct.Date()</code></p></li>
+<li><p>Lubridate</p>
 <ul>
-<li>offers consistent and easy to handle functions, that take special features as leap years, leap seconds, daylight savings time (DST) or time zones into account<br />
+<li>Offers consistent and easy to handle functions, that take special features as leap years, leap seconds, daylight savings time (DST) or time zones into account<br />
 </li>
-<li>overrides base R functions for working with dates and times<br />
+<li>Overrides base R functions for working with dates and times<br />
 </li>
-<li>focuses on working with dates and datetimes, not times in particular (for that see hms package)<br />
+<li>Focuses on working with dates and datetimes, not times in particular (for that see hms package)<br />
 </li>
-<li>refers to a specific moment in time as an <strong>instant</strong><br />
-</li>
+<li>Refers to a specific moment in time as an <strong>instant</strong></li>
 </ul></li>
-<li>A <a href="https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf">Cheat Sheet</a> with the most important formulas and explanations is available</li>
+<li><p>A <a href="https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf">Cheat Sheet</a> with the most important formulas and explanations is available</p></li>
 </ul>
 </div>
 <div id="prerequisites" class="section level1">
 <h1>Prerequisites</h1>
 <ul>
-<li>Lubridate is not part of the core tidyverse and thus needs an extra installation via <code>install.packages(&quot;lubridate&quot;)</code><br />
-</li>
-<li>When working with lubridate installing and using the tidyverse is recommended:</li>
+<li><p>Lubridate is not part of the core tidyverse and thus needs an extra installation via <code>install.packages(&quot;lubridate&quot;)</code></p></li>
+<li><p>When working with lubridate installing and using the tidyverse is recommended:</p></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(lubridate)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
@@ -1611,31 +1607,29 @@ $(document).ready(function () {
 <div id="creating-dates-and-datetimes" class="section level1">
 <h1>Creating Dates and Datetimes</h1>
 <ul>
-<li>Three types refer to an instant
+<li><p>Three types refer to an instant</p>
 <ul>
-<li>Date
+<li>Date <code>&lt;date&gt;</code>
 <ul>
 <li>If displayed in numeric context (e.g. histogram) 1 means one day<br />
 </li>
 </ul></li>
-<li>Time<br />
+<li>Time <code>&lt;time&gt;</code><br />
 </li>
-<li>Datetime
+<li>Datetime <code>&lt;dttm&gt;</code>
 <ul>
-<li>If displayed in numeric context (e.g. histogram) 1 means one second<br />
-</li>
+<li>If displayed in numeric context (e.g. histogram) 1 means one second</li>
 </ul></li>
 </ul></li>
-<li>Always use simplest possible type (no unnecessary datetime)<br />
-</li>
-<li>Get current date or datetime via <code>today()</code> and <code>now()</code> functions</li>
+<li><p>Always use <em>simplest</em> possible type (no unnecessary datetime)</p></li>
+<li><p>Get current date or datetime via <code>today()</code> and <code>now()</code> functions</p></li>
 </ul>
 <div id="create-dates-and-datetimes-from-string" class="section level2">
 <h2>Create Dates and Datetimes from String</h2>
 <ul>
-<li>functions automatically work out format if order of <strong>y</strong>ear, <strong>m</strong>onth, <strong>d</strong>ay, <strong>h</strong>our, <strong>m</strong>inute and <strong>s</strong>econd
+<li>Functions automatically work out format if order of <strong>y</strong>ear, <strong>m</strong>onth, <strong>d</strong>ay, <strong>h</strong>our, <strong>m</strong>inute and <strong>s</strong>econd
 <ul>
-<li>automatically recognize common separators <strong>-</strong>, <strong>/</strong>, <strong>.</strong> and <strong>&quot; &quot;</strong></li>
+<li>Automatically recognize common separators <strong>“-”</strong>, <strong>“/”</strong>, <strong>“.”</strong> and <strong>&quot; &quot;</strong></li>
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">mdy_hm</span>(<span class="st">&quot;January, 31st, 2019 10:45&quot;</span>)</a></code></pre></div>
@@ -1644,13 +1638,13 @@ $(document).ready(function () {
 <div id="create-dates-and-datetimes-from-individual-componentscolumns" class="section level2">
 <h2>Create Dates and Datetimes from Individual Components/Columns</h2>
 <ul>
-<li>For making dates use <code>make_date()</code><br />
-</li>
-<li>For making datetimes use <code>make_datetime()</code></li>
+<li><p>For making dates use <code>make_date()</code></p></li>
+<li><p>For making datetimes use <code>make_datetime()</code></p></li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stop_date_time=</span><span class="kw">make_datetime</span>(<span class="dt">year=</span><span class="kw">year</span>(stop_date), <span class="dt">month =</span> <span class="kw">month</span>(stop_date), <span class="dt">day =</span> </a>
-<a class="sourceLine" id="cb10-3" title="3">         <span class="kw">day</span>(stop_date), <span class="dt">hour =</span> <span class="kw">hour</span>(stop_time), <span class="dt">min =</span> <span class="kw">minute</span>(stop_time), <span class="dt">sec =</span> <span class="kw">second</span>(stop_time)))</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># New column with format datetime</span></a>
+<a class="sourceLine" id="cb10-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stop_date_time=</span><span class="kw">make_datetime</span>(<span class="dt">year=</span><span class="kw">year</span>(stop_date), <span class="dt">month =</span> <span class="kw">month</span>(stop_date), <span class="dt">day =</span> </a>
+<a class="sourceLine" id="cb10-4" title="4">         <span class="kw">day</span>(stop_date), <span class="dt">hour =</span> <span class="kw">hour</span>(stop_time), <span class="dt">min =</span> <span class="kw">minute</span>(stop_time), <span class="dt">sec =</span> <span class="kw">second</span>(stop_time)))</a></code></pre></div>
 <ul>
 <li>In this case very long, instead the functions from the chapter before can be used</li>
 </ul>
@@ -1671,7 +1665,7 @@ $(document).ready(function () {
 <ul>
 <li>Use accessor functions to get specific components of dates or datetimes, similar to functions creating dates and datetimes, such as <code>year()</code>, <code>month()</code>, <code>yday()</code>, <code>mday()</code>, <code>wday()</code>, <code>hour()</code>, <code>minute()</code>, <code>second()</code>
 <ul>
-<li>for <code>month()</code> and <code>wday()</code> set <strong>label = T</strong> to display the name and set <strong>abbr = F</strong> to display the full name, otherwise the abbrevation will be shown</li>
+<li>For <code>month()</code> and <code>wday()</code> set <strong>label = T</strong> to display the name and set <strong>abbr = F</strong> to display the full name, otherwise the abbrevation will be shown</li>
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Show all speeding drivers under 25 while grouping by year component of stop_date_time</span></a>
@@ -1707,19 +1701,16 @@ $(document).ready(function () {
 <div id="setting-components" class="section level2">
 <h2>Setting Components</h2>
 <ul>
-<li>To set a component of a single date or datetime to a specific value use the same functions as for getting components, e.g. <code>year()</code>, <code>month()</code>, <code>hour()</code> etc.<br />
-</li>
-<li>To set multiple values at once use <code>update()</code>, where all date components for a certain variable or column can be specified at once<br />
-</li>
-<li>If a set value is too big, it will automatically roll over to the next bigger unit, e.g. adding 30 days to Feb. 1st will result in a date or datetime with month march</li>
+<li><p>To set a component of a single date or datetime to a specific value use the same functions as for getting components, e.g. <code>year()</code>, <code>month()</code>, <code>hour()</code> etc.</p></li>
+<li><p>To set multiple values at once use <code>update()</code>, where all date components for a certain variable or column can be specified at once</p></li>
+<li><p>If a set value is too big, it will automatically roll over to the next bigger unit, e.g. adding 30 days to Feb. 1st will result in a date or datetime with month march</p></li>
 </ul>
 </div>
 <div id="rounding-components" class="section level2">
 <h2>Rounding Components</h2>
 <ul>
-<li>Rounding dates is useful when dealing with units that are not a direct component of a date or datetime, such as quarters or weeks<br />
-</li>
-<li>Three functions to round
+<li><p>Rounding dates is useful when dealing with units that are not a direct component of a date or datetime, such as quarters or weeks</p></li>
+<li><p>Three functions to round</p>
 <ul>
 <li><code>floor_date()</code> rounds to the next smaller unit<br />
 </li>
@@ -1756,9 +1747,8 @@ $(document).ready(function () {
 <div id="duration" class="section level2">
 <h2>Duration</h2>
 <ul>
-<li>Durations represent the exact <strong>number of seconds</strong> between two instants (fixed length)<br />
-</li>
-<li>All difftime objects can be formatted into a duration to get a fixed result unit (seconds) with <code>as.duration()</code></li>
+<li><p>Durations represent the exact <strong>number of seconds</strong> between two instants (fixed length)</p></li>
+<li><p>All difftime objects can be formatted into a duration to get a fixed result unit (seconds) with <code>as.duration()</code></p></li>
 </ul>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># Calculating the time difference between two stops</span></a>
 <a class="sourceLine" id="cb18-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -1802,21 +1792,17 @@ $(document).ready(function () {
 # ... with 91,731 more rows</code></pre>
 <p><strong>ATTENTION</strong></p>
 <ul>
-<li>No <code>dmonth()</code> function as months don’t have the same length<br />
-</li>
-<li>When confronted with higher units than seconds the conversion rate is 60 seconds a minute, 60 minutes an hour etc. and thus specalities such as DST aren’t considered</li>
+<li><p>No <code>dmonth()</code> function as months don’t have the same length</p></li>
+<li><p>When confronted with higher units than seconds the conversion rate is 60 seconds a minute, 60 minutes an hour etc. and thus specalities such as DST aren’t considered</p></li>
 </ul>
 </div>
 <div id="period" class="section level2">
 <h2>Period</h2>
 <ul>
-<li>Periods don’t have the same length, but work in human units such as days, months etc.<br />
-</li>
-<li>They are more intuitive to work with than durations<br />
-</li>
-<li>Takes specialities such as DST or leap years into account<br />
-</li>
-<li>All difftime objects can be formatted into a period with <code>as.period()</code></li>
+<li><p>Periods don’t have the same length, but work in human units such as days, months etc.</p></li>
+<li><p>They are more intuitive to work with than durations</p></li>
+<li><p>Takes specialities such as DST or leap years into account</p></li>
+<li><p>All difftime objects can be formatted into a period with <code>as.period()</code></p></li>
 </ul>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Calculating the time difference between two stops as a period</span></a>
 <a class="sourceLine" id="cb22-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -1865,16 +1851,13 @@ $(document).ready(function () {
 <div id="interval" class="section level2">
 <h2>Interval</h2>
 <ul>
-<li>Intervals represent a duration with a specific starting point (and ending point)<br />
-</li>
-<li>Accurate measurement of time spans (periods and durations lack context often)<br />
-</li>
-<li>Not useful for datetime calculations as intervals are bound to a start and an end
+<li><p>Intervals represent a duration with a specific starting point (and ending point)</p></li>
+<li><p>Accurate measurement of time spans (periods and durations lack context often)</p></li>
+<li><p>Not useful for datetime calculations as intervals are bound to a start and an end</p>
 <ul>
-<li>If intervals are added to datetime objects R coerces it into a duration<br />
-</li>
+<li>If intervals are added to datetime objects R coerces it into a duration</li>
 </ul></li>
-<li>When building an interval the date that occurs earlier in time must be called first, so that the length is always positive</li>
+<li><p>When building an interval the date that occurs earlier in time must be called first, so that the length is always positive</p></li>
 </ul>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">interval =</span> <span class="kw">lag</span>(stop_date_time) <span class="op">%--%</span><span class="st"> </span>stop_date_time)</a>
 <a class="sourceLine" id="cb26-2" title="2">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, interval)</a></code></pre></div>
@@ -1934,20 +1917,13 @@ $(document).ready(function () {
 <div id="time-zones" class="section level1">
 <h1>Time Zones</h1>
 <ul>
-<li><p>Time zones are complicated to work with, because of geopolitical entities or ambiguous everyday names, such as Eastern Standard Time, which is different in the USA, Canada or Australia<br />
-</p></li>
-<li><p>Time Zone is an attribute of the datetime object<br />
-</p></li>
-<li><p>R uses international standardt time zones displayed in <code>&lt;continent&gt;/&lt;city&gt;</code><br />
-</p></li>
-<li><p>If no time zone is specified R assumes UTC, which doesn’t use DST<br />
-</p></li>
-<li><p>Operations that combine dates or datetimes (e.g. <code>c()</code>) often drop assigned time zone and use the local time zone<br />
-</p></li>
-<li><p>Local time zone can be displayed via <code>Sys.timezone()</code><br />
-</p></li>
-<li><p>Complete list of time zones can be displayed via <code>OlsonNames()</code><br />
-</p></li>
+<li><p>Time zones are complicated to work with, because of geopolitical entities or ambiguous everyday names, such as Eastern Standard Time, which is different in the USA, Canada or Australia</p></li>
+<li><p>Time Zone is an attribute of the datetime object</p></li>
+<li><p>R uses international standardt time zones displayed in <code>&lt;continent&gt;/&lt;city&gt;</code></p></li>
+<li><p>If no time zone is specified R assumes UTC, which doesn’t use DST</p></li>
+<li><p>Operations that combine dates or datetimes (e.g. <code>c()</code>) often drop assigned time zone and use the local time zone</p></li>
+<li><p>Local time zone can be displayed via <code>Sys.timezone()</code></p></li>
+<li><p>Complete list of time zones can be displayed via <code>OlsonNames()</code></p></li>
 <li><p>Change time zone on two levels</p>
 <ul>
 <li>Keep the instant and only change how it’s displayed <code>with_tz()</code></li>
