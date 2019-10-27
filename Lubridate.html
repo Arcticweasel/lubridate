@@ -10,7 +10,7 @@
 
 <meta name="author" content="Laura Noetzel" />
 
-<meta name="date" content="2019-10-26" />
+<meta name="date" content="2019-10-27" />
 
 <title>Lubridate: Theory and Practice</title>
 
@@ -1420,6 +1420,73 @@ border-bottom: 1px solid #fcfcfc;
 </script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
 
 
 </head>
@@ -1453,6 +1520,27 @@ $(document).ready(function () {
     <div id="text-table-of-contents">
       <ul>
       <li><a href="#overview">Overview</a></li>
+      <li><a href="#prerequisites">Prerequisites</a><ul>
+      <li><a href="#preparing-the-data">Preparing the Data</a></li>
+      </ul></li>
+      <li><a href="#creating-dates-and-datetimes">Creating Dates and Datetimes</a><ul>
+      <li><a href="#create-dates-and-datetimes-from-string">Create Dates and Datetimes from String</a></li>
+      <li><a href="#create-dates-and-datetimes-from-individual-componentscolumns">Create Dates and Datetimes from Individual Components/Columns</a></li>
+      <li><a href="#create-dates-and-datetimes-from-other-types">Create Dates and Datetimes from Other Types</a></li>
+      </ul></li>
+      <li><a href="#components-of-dates-and-datetimes">Components of Dates and Datetimes</a><ul>
+      <li><a href="#getting-components">Getting Components</a></li>
+      <li><a href="#setting-components">Setting Components</a></li>
+      <li><a href="#rounding-components">Rounding Components</a></li>
+      </ul></li>
+      <li><a href="#time-spans">Time Spans</a><ul>
+      <li><a href="#duration">Duration</a></li>
+      <li><a href="#period">Period</a></li>
+      <li><a href="#interval">Interval</a></li>
+      <li><a href="#what-time-span-to-use">What Time Span to Use</a></li>
+      </ul></li>
+      <li><a href="#time-zones">Time Zones</a></li>
+      <li><a href="#sources">Sources</a></li>
       </ul>
     </div>
 </div>
@@ -1479,6 +1567,435 @@ $(document).ready(function () {
 <li>A <a href="https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf">Cheat Sheet</a> with the most important formulas and explanations is available</li>
 </ul>
 </div>
+<div id="prerequisites" class="section level1">
+<h1>Prerequisites</h1>
+<ul>
+<li>Lubridate is not part of the core tidyverse and thus needs an extra installation via <code>install.packages(&quot;lubridate&quot;)</code><br />
+</li>
+<li>When working with lubridate installing and using the tidyverse is recommended:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<ul>
+<li>The Development version of the package is available on GitHub (other packages needed to install)</li>
+</ul>
+<div id="preparing-the-data" class="section level2">
+<h2>Preparing the Data</h2>
+<ul>
+<li>Load and inspect the data, check for NAs and remove empty columns</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;police_project.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">View</span>(df)</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw">count</span>(<span class="kw">is.na</span>(county_name))</a></code></pre></div>
+<pre><code># A tibble: 1 x 2
+  `is.na(county_name)`     n
+  &lt;lgl&gt;                &lt;int&gt;
+1 TRUE                 91741</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">count</span>(<span class="kw">is.na</span>(search_type))</a></code></pre></div>
+<pre><code># A tibble: 2 x 2
+  `is.na(search_type)`     n
+  &lt;lgl&gt;                &lt;int&gt;
+1 FALSE                 3196
+2 TRUE                 88545</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">within</span>(<span class="kw">rm</span>(county_name))</a></code></pre></div>
+<ul>
+<li>Set theme for visualizations to classic</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">theme_set</span>(<span class="kw">theme_classic</span>())</a></code></pre></div>
+</div>
+</div>
+<div id="creating-dates-and-datetimes" class="section level1">
+<h1>Creating Dates and Datetimes</h1>
+<ul>
+<li>Three types refer to an instant
+<ul>
+<li>Date
+<ul>
+<li>If displayed in numeric context (e.g. histogram) 1 means one day<br />
+</li>
+</ul></li>
+<li>Time<br />
+</li>
+<li>Datetime
+<ul>
+<li>If displayed in numeric context (e.g. histogram) 1 means one second<br />
+</li>
+</ul></li>
+</ul></li>
+<li>Always use simplest possible type (no unnecessary datetime)<br />
+</li>
+<li>Get current date or datetime via <code>today()</code> and <code>now()</code> functions</li>
+</ul>
+<div id="create-dates-and-datetimes-from-string" class="section level2">
+<h2>Create Dates and Datetimes from String</h2>
+<ul>
+<li>functions automatically work out format if order of <strong>y</strong>ear, <strong>m</strong>onth, <strong>d</strong>ay, <strong>h</strong>our, <strong>m</strong>inute and <strong>s</strong>econd
+<ul>
+<li>automatically recognize common separators <strong>-</strong>, <strong>/</strong>, <strong>.</strong> and <strong>&quot; &quot;</strong></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">mdy_hm</span>(<span class="st">&quot;January, 31st, 2019 10:45&quot;</span>)</a></code></pre></div>
+<pre><code>[1] &quot;2019-01-31 10:45:00 UTC&quot;</code></pre>
+</div>
+<div id="create-dates-and-datetimes-from-individual-componentscolumns" class="section level2">
+<h2>Create Dates and Datetimes from Individual Components/Columns</h2>
+<ul>
+<li>For making dates use <code>make_date()</code><br />
+</li>
+<li>For making datetimes use <code>make_datetime()</code></li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stop_date_time=</span><span class="kw">make_datetime</span>(<span class="dt">year=</span><span class="kw">year</span>(stop_date), <span class="dt">month =</span> <span class="kw">month</span>(stop_date), <span class="dt">day =</span> </a>
+<a class="sourceLine" id="cb10-3" title="3">         <span class="kw">day</span>(stop_date), <span class="dt">hour =</span> <span class="kw">hour</span>(stop_time), <span class="dt">min =</span> <span class="kw">minute</span>(stop_time), <span class="dt">sec =</span> <span class="kw">second</span>(stop_time)))</a></code></pre></div>
+<ul>
+<li>In this case very long, instead the functions from the chapter before can be used</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stop_date_time=</span><span class="kw">ymd_hms</span>(<span class="kw">paste</span>(stop_date,stop_time)))</a></code></pre></div>
+</div>
+<div id="create-dates-and-datetimes-from-other-types" class="section level2">
+<h2>Create Dates and Datetimes from Other Types</h2>
+<ul>
+<li>For switching between date and datetime or when working with numeric offsets from unix systems use <code>as_date()</code> or <code>as_datetime()</code></li>
+</ul>
+</div>
+</div>
+<div id="components-of-dates-and-datetimes" class="section level1">
+<h1>Components of Dates and Datetimes</h1>
+<div id="getting-components" class="section level2">
+<h2>Getting Components</h2>
+<ul>
+<li>Use accessor functions to get specific components of dates or datetimes, similar to functions creating dates and datetimes, such as <code>year()</code>, <code>month()</code>, <code>yday()</code>, <code>mday()</code>, <code>wday()</code>, <code>hour()</code>, <code>minute()</code>, <code>second()</code>
+<ul>
+<li>for <code>month()</code> and <code>wday()</code> set <strong>label = T</strong> to display the name and set <strong>abbr = F</strong> to display the full name, otherwise the abbrevation will be shown</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Show all speeding drivers under 25 while grouping by year component of stop_date_time</span></a>
+<a class="sourceLine" id="cb12-2" title="2">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(<span class="kw">year</span>(stop_date_time)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="st">  </span><span class="kw">filter</span>(violation<span class="op">==</span><span class="st">&quot;Speeding&quot;</span> <span class="op">&amp;</span><span class="st"> </span>driver_age <span class="op">&lt;</span><span class="st"> </span><span class="dv">25</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="st">  </span><span class="kw">count</span>()</a></code></pre></div>
+<pre><code># A tibble: 11 x 2
+# Groups:   year(stop_date_time) [11]
+   `year(stop_date_time)`     n
+                    &lt;dbl&gt; &lt;int&gt;
+ 1                   2005   628
+ 2                   2006  2542
+ 3                   2007  2254
+ 4                   2008  1747
+ 5                   2009  1246
+ 6                   2010  1234
+ 7                   2011  1130
+ 8                   2012  1310
+ 9                   2013   995
+10                   2014  1127
+11                   2015  1122</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># Show the overall number of drunk drivers sorted by weekday component of stop_date_time</span></a>
+<a class="sourceLine" id="cb14-2" title="2">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="st">  </span><span class="kw">filter</span>(drugs_related_stop <span class="op">==</span><span class="st"> </span>T) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(<span class="dt">weekday=</span><span class="kw">wday</span>(stop_date_time, <span class="dt">label =</span> T, <span class="dt">abbr =</span> F, <span class="dt">week_start =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="st">  </span><span class="kw">count</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> weekday, <span class="dt">y =</span> n)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="kw">aes</span>(<span class="dt">fill =</span> n)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;palevioletred&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;palevioletred4&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" width="768" /></p>
+</div>
+<div id="setting-components" class="section level2">
+<h2>Setting Components</h2>
+<ul>
+<li>To set a component of a single date or datetime to a specific value use the same functions as for getting components, e.g. <code>year()</code>, <code>month()</code>, <code>hour()</code> etc.<br />
+</li>
+<li>To set multiple values at once use <code>update()</code>, where all date components for a certain variable or column can be specified at once<br />
+</li>
+<li>If a set value is too big, it will automatically roll over to the next bigger unit, e.g. adding 30 days to Feb. 1st will result in a date or datetime with month march</li>
+</ul>
+</div>
+<div id="rounding-components" class="section level2">
+<h2>Rounding Components</h2>
+<ul>
+<li>Rounding dates is useful when dealing with units that are not a direct component of a date or datetime, such as quarters or weeks<br />
+</li>
+<li>Three functions to round
+<ul>
+<li><code>floor_date()</code> rounds to the next smaller unit<br />
+</li>
+<li><code>round_date()</code> rounds to mathematically nearest unit<br />
+</li>
+<li><code>ceiling_date()</code> rounds to next bigger unit</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># New columns for rounded quarters</span></a>
+<a class="sourceLine" id="cb15-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">Quarter =</span> <span class="kw">round_date</span>(<span class="dt">x =</span> stop_date_time, <span class="dt">unit =</span> <span class="st">&quot;quarter&quot;</span>),</a>
+<a class="sourceLine" id="cb15-4" title="4">           <span class="dt">Floor_Quarter =</span> <span class="kw">floor_date</span>(stop_date_time, <span class="st">&quot;quarter&quot;</span>),</a>
+<a class="sourceLine" id="cb15-5" title="5">           <span class="dt">Ceiling_Quarter =</span> <span class="kw">ceiling_date</span>(stop_date_time, <span class="st">&quot;quarter&quot;</span>))</a>
+<a class="sourceLine" id="cb15-6" title="6">df[<span class="dv">1</span>,] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, Quarter, Floor_Quarter, Ceiling_Quarter)</a></code></pre></div>
+<pre><code># A tibble: 1 x 4
+  stop_date_time      Quarter             Floor_Quarter      
+  &lt;dttm&gt;              &lt;dttm&gt;              &lt;dttm&gt;             
+1 2005-01-02 01:55:00 2005-01-01 00:00:00 2005-01-01 00:00:00
+# ... with 1 more variable: Ceiling_Quarter &lt;dttm&gt;</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># Show the number of drug related stops in 2015 per week</span></a>
+<a class="sourceLine" id="cb17-2" title="2">df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">year</span>(stop_date_time)<span class="op">==</span><span class="dv">2015</span>, drugs_related_stop <span class="op">==</span><span class="st"> </span>T) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw">count</span>(<span class="dt">week =</span> <span class="kw">floor_date</span>(stop_date_time, <span class="st">&quot;week&quot;</span>, <span class="dt">week_start =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> week, <span class="dt">y =</span> n)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-6" title="6"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<p><img src="data:image/png;base64,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" width="768" /></p>
+</div>
+</div>
+<div id="time-spans" class="section level1">
+<h1>Time Spans</h1>
+<ul>
+<li>Three classes of time spans in R</li>
+</ul>
+<div id="duration" class="section level2">
+<h2>Duration</h2>
+<ul>
+<li>Durations represent the exact <strong>number of seconds</strong> between two instants (fixed length)<br />
+</li>
+<li>All difftime objects can be formatted into a duration to get a fixed result unit (seconds) with <code>as.duration()</code></li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># Calculating the time difference between two stops</span></a>
+<a class="sourceLine" id="cb18-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time_diff =</span>stop_date_time <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(stop_date_time),</a>
+<a class="sourceLine" id="cb18-4" title="4">         <span class="dt">duration =</span> <span class="kw">as.duration</span>(time_diff))</a>
+<a class="sourceLine" id="cb18-5" title="5">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, duration)</a></code></pre></div>
+<pre><code># A tibble: 91,741 x 2
+   stop_date_time      duration              
+   &lt;dttm&gt;              &lt;Duration&gt;            
+ 1 2005-01-02 01:55:00 NA                    
+ 2 2005-01-18 08:15:00 1405200s (~2.32 weeks)
+ 3 2005-01-23 23:15:00 486000s (~5.62 days)  
+ 4 2005-02-20 17:15:00 2397600s (~3.96 weeks)
+ 5 2005-03-14 10:00:00 1874700s (~3.1 weeks) 
+ 6 2005-03-23 09:45:00 776700s (~1.28 weeks) 
+ 7 2005-04-01 17:30:00 805500s (~1.33 weeks) 
+ 8 2005-06-06 13:20:00 5687400s (~9.4 weeks) 
+ 9 2005-07-13 10:15:00 3185700s (~5.27 weeks)
+10 2005-07-13 15:45:00 19800s (~5.5 hours)   
+# ... with 91,731 more rows</code></pre>
+<ul>
+<li>Calculating with durations works with similar functions as before, e.g. <code>dyears()</code> or <code>dhours()</code></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Calculate limitation date</span></a>
+<a class="sourceLine" id="cb20-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">limitation =</span> <span class="kw">as_date</span>(stop_date_time <span class="op">+</span><span class="st"> </span><span class="kw">dyears</span>(<span class="dv">3</span>)))</a>
+<a class="sourceLine" id="cb20-4" title="4">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, limitation)</a></code></pre></div>
+<pre><code># A tibble: 91,741 x 2
+   stop_date_time      limitation
+   &lt;dttm&gt;              &lt;date&gt;    
+ 1 2005-01-02 01:55:00 2008-01-02
+ 2 2005-01-18 08:15:00 2008-01-18
+ 3 2005-01-23 23:15:00 2008-01-23
+ 4 2005-02-20 17:15:00 2008-02-20
+ 5 2005-03-14 10:00:00 2008-03-13
+ 6 2005-03-23 09:45:00 2008-03-22
+ 7 2005-04-01 17:30:00 2008-03-31
+ 8 2005-06-06 13:20:00 2008-06-05
+ 9 2005-07-13 10:15:00 2008-07-12
+10 2005-07-13 15:45:00 2008-07-12
+# ... with 91,731 more rows</code></pre>
+<p><strong>ATTENTION</strong></p>
+<ul>
+<li>No <code>dmonth()</code> function as months don’t have the same length<br />
+</li>
+<li>When confronted with higher units than seconds the conversion rate is 60 seconds a minute, 60 minutes an hour etc. and thus specalities such as DST aren’t considered</li>
+</ul>
+</div>
+<div id="period" class="section level2">
+<h2>Period</h2>
+<ul>
+<li>Periods don’t have the same length, but work in human units such as days, months etc.<br />
+</li>
+<li>They are more intuitive to work with than durations<br />
+</li>
+<li>Takes specialities such as DST or leap years into account<br />
+</li>
+<li>All difftime objects can be formatted into a period with <code>as.period()</code></li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Calculating the time difference between two stops as a period</span></a>
+<a class="sourceLine" id="cb22-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">period =</span> <span class="kw">as.period</span>(time_diff))</a>
+<a class="sourceLine" id="cb22-4" title="4">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, duration, period)</a></code></pre></div>
+<pre><code># A tibble: 91,741 x 3
+   stop_date_time      duration               period        
+   &lt;dttm&gt;              &lt;Duration&gt;             &lt;Period&gt;      
+ 1 2005-01-02 01:55:00 NA                     NA            
+ 2 2005-01-18 08:15:00 1405200s (~2.32 weeks) 16d 6H 20M 0S 
+ 3 2005-01-23 23:15:00 486000s (~5.62 days)   5d 15H 0M 0S  
+ 4 2005-02-20 17:15:00 2397600s (~3.96 weeks) 27d 18H 0M 0S 
+ 5 2005-03-14 10:00:00 1874700s (~3.1 weeks)  21d 16H 45M 0S
+ 6 2005-03-23 09:45:00 776700s (~1.28 weeks)  8d 23H 45M 0S 
+ 7 2005-04-01 17:30:00 805500s (~1.33 weeks)  9d 7H 45M 0S  
+ 8 2005-06-06 13:20:00 5687400s (~9.4 weeks)  65d 19H 50M 0S
+ 9 2005-07-13 10:15:00 3185700s (~5.27 weeks) 36d 20H 55M 0S
+10 2005-07-13 15:45:00 19800s (~5.5 hours)    5H 30M 0S     
+# ... with 91,731 more rows</code></pre>
+<ul>
+<li>Creating and calculating with periods works with similar functions as before, e.g. <code>years()</code>, <code>months()</code>, <code>hours()</code> etc.</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co"># Calculate limitation date with period</span></a>
+<a class="sourceLine" id="cb24-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">limitation_period =</span> <span class="kw">as_date</span>(stop_date_time <span class="op">+</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">3</span>)))</a>
+<a class="sourceLine" id="cb24-4" title="4">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, limitation, limitation_period)</a></code></pre></div>
+<pre><code># A tibble: 91,741 x 3
+   stop_date_time      limitation limitation_period
+   &lt;dttm&gt;              &lt;date&gt;     &lt;date&gt;           
+ 1 2005-01-02 01:55:00 2008-01-02 2008-01-02       
+ 2 2005-01-18 08:15:00 2008-01-18 2008-01-18       
+ 3 2005-01-23 23:15:00 2008-01-23 2008-01-23       
+ 4 2005-02-20 17:15:00 2008-02-20 2008-02-20       
+ 5 2005-03-14 10:00:00 2008-03-13 2008-03-14       
+ 6 2005-03-23 09:45:00 2008-03-22 2008-03-23       
+ 7 2005-04-01 17:30:00 2008-03-31 2008-04-01       
+ 8 2005-06-06 13:20:00 2008-06-05 2008-06-06       
+ 9 2005-07-13 10:15:00 2008-07-12 2008-07-13       
+10 2005-07-13 15:45:00 2008-07-12 2008-07-13       
+# ... with 91,731 more rows</code></pre>
+<p><strong>ATTENTION</strong></p>
+<ul>
+<li><code>hour()</code> != <code>hours()</code>, <code>month()</code> != <code>months()</code> etc.</li>
+</ul>
+</div>
+<div id="interval" class="section level2">
+<h2>Interval</h2>
+<ul>
+<li>Intervals represent a duration with a specific starting point (and ending point)<br />
+</li>
+<li>Accurate measurement of time spans (periods and durations lack context often)<br />
+</li>
+<li>Not useful for datetime calculations as intervals are bound to a start and an end
+<ul>
+<li>If intervals are added to datetime objects R coerces it into a duration<br />
+</li>
+</ul></li>
+<li>When building an interval the date that occurs earlier in time must be called first, so that the length is always positive</li>
+</ul>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">interval =</span> <span class="kw">lag</span>(stop_date_time) <span class="op">%--%</span><span class="st"> </span>stop_date_time)</a>
+<a class="sourceLine" id="cb26-2" title="2">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, interval)</a></code></pre></div>
+<pre><code># A tibble: 91,741 x 2
+   stop_date_time      interval                                        
+   &lt;dttm&gt;              &lt;Interval&gt;                                      
+ 1 2005-01-02 01:55:00 NA--NA                                          
+ 2 2005-01-18 08:15:00 2005-01-02 01:55:00 UTC--2005-01-18 08:15:00 UTC
+ 3 2005-01-23 23:15:00 2005-01-18 08:15:00 UTC--2005-01-23 23:15:00 UTC
+ 4 2005-02-20 17:15:00 2005-01-23 23:15:00 UTC--2005-02-20 17:15:00 UTC
+ 5 2005-03-14 10:00:00 2005-02-20 17:15:00 UTC--2005-03-14 10:00:00 UTC
+ 6 2005-03-23 09:45:00 2005-03-14 10:00:00 UTC--2005-03-23 09:45:00 UTC
+ 7 2005-04-01 17:30:00 2005-03-23 09:45:00 UTC--2005-04-01 17:30:00 UTC
+ 8 2005-06-06 13:20:00 2005-04-01 17:30:00 UTC--2005-06-06 13:20:00 UTC
+ 9 2005-07-13 10:15:00 2005-06-06 13:20:00 UTC--2005-07-13 10:15:00 UTC
+10 2005-07-13 15:45:00 2005-07-13 10:15:00 UTC--2005-07-13 15:45:00 UTC
+# ... with 91,731 more rows</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># Or use</span></a>
+<a class="sourceLine" id="cb28-2" title="2"></a>
+<a class="sourceLine" id="cb28-3" title="3">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">interval =</span> <span class="kw">interval</span>(<span class="dt">start =</span> <span class="kw">lag</span>(stop_date_time), <span class="dt">end =</span> stop_date_time))</a></code></pre></div>
+<ul>
+<li>Calculate the periods in an interval with integer division <code>%/%</code> (division without remainers)</li>
+</ul>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">interval_days =</span> interval <span class="op">%/%</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb29-3" title="3">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, interval_days)</a></code></pre></div>
+<pre><code># A tibble: 91,741 x 2
+   stop_date_time      interval_days
+   &lt;dttm&gt;                      &lt;dbl&gt;
+ 1 2005-01-02 01:55:00            NA
+ 2 2005-01-18 08:15:00            16
+ 3 2005-01-23 23:15:00             5
+ 4 2005-02-20 17:15:00            27
+ 5 2005-03-14 10:00:00            21
+ 6 2005-03-23 09:45:00             8
+ 7 2005-04-01 17:30:00             9
+ 8 2005-06-06 13:20:00            65
+ 9 2005-07-13 10:15:00            36
+10 2005-07-13 15:45:00             0
+# ... with 91,731 more rows</code></pre>
+</div>
+<div id="what-time-span-to-use" class="section level2">
+<h2>What Time Span to Use</h2>
+<ul>
+<li>Always use simplest possible data structure
+<ul>
+<li>Use <strong>duration</strong> if you only care for physical time<br />
+</li>
+<li>Use <strong>period</strong> if you need to work with human units<br />
+</li>
+<li>Use <strong>interval</strong> if you need to know how long a time span is in human units</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="time-zones" class="section level1">
+<h1>Time Zones</h1>
+<ul>
+<li><p>Time zones are complicated to work with, because of geopolitical entities or ambiguous everyday names, such as Eastern Standard Time, which is different in the USA, Canada or Australia<br />
+</p></li>
+<li><p>Time Zone is an attribute of the datetime object<br />
+</p></li>
+<li><p>R uses international standardt time zones displayed in <code>&lt;continent&gt;/&lt;city&gt;</code><br />
+</p></li>
+<li><p>If no time zone is specified R assumes UTC, which doesn’t use DST<br />
+</p></li>
+<li><p>Operations that combine dates or datetimes (e.g. <code>c()</code>) often drop assigned time zone and use the local time zone<br />
+</p></li>
+<li><p>Local time zone can be displayed via <code>Sys.timezone()</code><br />
+</p></li>
+<li><p>Complete list of time zones can be displayed via <code>OlsonNames()</code><br />
+</p></li>
+<li><p>Change time zone on two levels</p>
+<ul>
+<li>Keep the instant and only change how it’s displayed <code>with_tz()</code></li>
+<li>Change the underlying instant, e.g. when wrong time zone is assigned <code>force_tz()</code></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co"># Keep instant</span></a>
+<a class="sourceLine" id="cb31-2" title="2">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">displayed_tz =</span> <span class="kw">with_tz</span>(<span class="dt">time =</span> stop_date_time, <span class="dt">tzone =</span> <span class="st">&quot;America/New_York&quot;</span>))</a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="co"># Change instant</span></a>
+<a class="sourceLine" id="cb31-5" title="5">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">changed_tz =</span> <span class="kw">force_tz</span>(<span class="dt">time =</span> stop_date_time, <span class="dt">tzone =</span> <span class="st">&quot;America/New_York&quot;</span>))</a>
+<a class="sourceLine" id="cb31-7" title="7">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(stop_date_time, displayed_tz, changed_tz)</a></code></pre></div>
+<pre><code># A tibble: 91,741 x 3
+   stop_date_time      displayed_tz        changed_tz         
+   &lt;dttm&gt;              &lt;dttm&gt;              &lt;dttm&gt;             
+ 1 2005-01-02 01:55:00 2005-01-01 20:55:00 2005-01-02 01:55:00
+ 2 2005-01-18 08:15:00 2005-01-18 03:15:00 2005-01-18 08:15:00
+ 3 2005-01-23 23:15:00 2005-01-23 18:15:00 2005-01-23 23:15:00
+ 4 2005-02-20 17:15:00 2005-02-20 12:15:00 2005-02-20 17:15:00
+ 5 2005-03-14 10:00:00 2005-03-14 05:00:00 2005-03-14 10:00:00
+ 6 2005-03-23 09:45:00 2005-03-23 04:45:00 2005-03-23 09:45:00
+ 7 2005-04-01 17:30:00 2005-04-01 12:30:00 2005-04-01 17:30:00
+ 8 2005-06-06 13:20:00 2005-06-06 09:20:00 2005-06-06 13:20:00
+ 9 2005-07-13 10:15:00 2005-07-13 06:15:00 2005-07-13 10:15:00
+10 2005-07-13 15:45:00 2005-07-13 11:45:00 2005-07-13 15:45:00
+# ... with 91,731 more rows</code></pre>
+</div>
+<div id="sources" class="section level1">
+<h1>Sources</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://www.kaggle.com/faressayah/stanford-open-policing-project" class="uri">https://www.kaggle.com/faressayah/stanford-open-policing-project</a><br />
+</li>
+<li><a href="https://openpolicing.stanford.edu/" class="uri">https://openpolicing.stanford.edu/</a><br />
+</li>
+<li><a href="https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf" class="uri">https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf</a><br />
+</li>
+<li><a href="https://r4ds.had.co.nz/dates-and-times.html" class="uri">https://r4ds.had.co.nz/dates-and-times.html</a><br />
+</li>
+<li><a href="https://www.rdocumentation.org/packages/lubridate/versions/1.7.4/topics/interval" class="uri">https://www.rdocumentation.org/packages/lubridate/versions/1.7.4/topics/interval</a><br />
+</li>
+<li><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="uri">https://lubridate.tidyverse.org/reference/round_date.html</a><br />
+</li>
+<li><a href="https://lubridate.tidyverse.org/" class="uri">https://lubridate.tidyverse.org/</a><br />
+</li>
+<li><a href="https://www.jstatsoft.org/article/view/v040i03" class="uri">https://www.jstatsoft.org/article/view/v040i03</a></li>
+</ol>
+</div>
 </div>
 
 
@@ -1486,7 +2003,7 @@ $(document).ready(function () {
 
 <div id="postamble" data-toggle="wy-nav-shift" class="status">
 <p class="author"><span class="glyphicon glyphicon-user"></span> Laura Noetzel</p>
-<p class="date"><span class="glyphicon glyphicon-calendar"></span> 2019-10-26</p>
+<p class="date"><span class="glyphicon glyphicon-calendar"></span> 2019-10-27</p>
 </div>
 
 
