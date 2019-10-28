@@ -13,7 +13,7 @@ library(knitr)
 library(rmdformats)
 
 ## Global options
-options(max.print="1000")
+options(max.print="99999")
 opts_chunk$set(echo=T,
 	             cache=TRUE,
                prompt=FALSE,
@@ -21,7 +21,7 @@ opts_chunk$set(echo=T,
                comment=NA,
                message=FALSE,
                warning=FALSE)
-opts_knit$set(width=1000)
+opts_knit$set(width=99999)
 ```
 
 # Overview  
