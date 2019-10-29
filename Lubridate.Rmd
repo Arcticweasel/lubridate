@@ -166,9 +166,9 @@ df %>%
 ```{r}
 # New columns for rounded quarters
 df <- df %>% 
-    mutate(Quarter = round_date(x = stop_date_time, unit = "quarter"),
-           Floor_Quarter = floor_date(stop_date_time, "quarter"),
-           Ceiling_Quarter = ceiling_date(stop_date_time, "quarter"))
+    mutate(Quarter = as_date(round_date(x = stop_date_time, unit = "quarter")),
+           Floor_Quarter = as_date(floor_date(stop_date_time, "quarter")),
+           Ceiling_Quarter = as_date(ceiling_date(stop_date_time, "quarter")))
 df[1,] %>% select(stop_date_time, Quarter, Floor_Quarter, Ceiling_Quarter)
 ```  
 ```{r}
