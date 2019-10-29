@@ -90,7 +90,7 @@ theme_set(theme_classic())
 
 ## Create Dates and Datetimes from String  
 
-- Functions automatically work out format if order of **y**ear, **m**onth, **d**ay, **h**our, **m**inute and **s**econd 
+- Functions automatically work out format if order of **y**ear, **m**onth, **d**ay, **h**our, **m**inute and **s**econd is specified
   + Automatically recognize common separators **"-"**, **"/"**, **"."** and **" "**  
   
 ```{r}
@@ -193,7 +193,7 @@ df %>%
 ```{r}
 # Calculating the time difference between two stops
 df <- df %>% 
-  mutate(time_diff =stop_date_time - lag(stop_date_time),
+  mutate(time_diff = stop_date_time - lag(stop_date_time),
          duration = as.duration(time_diff))
 df %>% select(stop_date_time, duration)
 ```  
@@ -289,7 +289,7 @@ df %>% select(stop_date_time, interval_days)
 
 - If no time zone is specified R assumes UTC, which doesn't use DST  
 
-- Operations that combine dates or datetimes (e.g. `c()`) often drop assigned time zone and use the local time zone  
+- Operations that combine dates or datetimes (e.g. `c()`) often drop assigned time zones and use the local time zone  
 
 - Local time zone can be displayed via `Sys.timezone()`  
 
